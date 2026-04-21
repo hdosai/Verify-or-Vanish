@@ -1,0 +1,85 @@
+body {
+  margin: 0;
+  background: radial-gradient(circle, #000 40%, #020d0d);
+  color: #00ffcc;
+  font-family: 'Courier New', monospace;
+  text-align: center;
+}
+
+.container {
+  padding: 20px;
+}
+
+/* GLITCH TITLE */
+.glitch h1 {
+  position: relative;
+  font-size: 2.5rem;
+  animation: glitch 1s infinite;
+}
+
+@keyframes glitch {
+  0% { text-shadow: 2px 0 red, -2px 0 blue; }
+  50% { text-shadow: -2px 0 red, 2px 0 blue; }
+  100% { text-shadow: 2px 0 red, -2px 0 blue; }
+}
+
+/* BUTTONS */
+button {
+  margin: 10px;
+  padding: 12px 20px;
+  background: transparent;
+  color: #00ffcc;
+  border: 1px solid #00ffcc;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 80%;
+  max-width: 300px;
+}
+
+button:hover {
+  background: #00ffcc;
+  color: black;
+}
+
+/* INPUT */
+input {
+  padding: 12px;
+  width: 80%;
+  max-width: 300px;
+  margin-top: 10px;
+  background: black;
+  border: 1px solid #00ffcc;
+  color: #00ffcc;
+}
+
+/* TIMER DANGER MODE */
+#timer.danger {
+  color: red;
+  animation: pulse 0.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+  100% { transform: scale(1); }
+}
+
+/* SCREEN SHAKE */
+.shake {
+  animation: shake 0.3s;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.8rem;
+  }
+}

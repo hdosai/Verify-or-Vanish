@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Verify or Vanish</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="container glitch">
+  <h1 data-text="VERIFY OR VANISH">VERIFY OR VANISH</h1>
+  
+  <p id="timer">Time Left: 60</p>
+
+  
+
+  <div id="game"></div>
+  <p id="message"></p>
+</div>
+
+<script src="script.js"></script>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+  import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+  const firebaseConfig = {
+  apiKey: "AIzaSyCCsqEyaxRtNqUHd6lzB99aNAVlASkof18",
+  authDomain: "verify-or-vanish.firebaseapp.com",
+  databaseURL: "https://verify-or-vanish-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId: "verify-or-vanish",
+  storageBucket: "verify-or-vanish.firebasestorage.app",
+  messagingSenderId: "509470697218",
+  appId: "1:509470697218:web:2715a9f44f844862b1041b"
+};
+
+  const app = initializeApp(firebaseConfig);
+  const db = getDatabase(app);
+
+  window.db = db;
+  window.ref = ref;
+  window.push = push;
+  window.onValue = onValue;
+</script>
+
+</body>
+</html>
