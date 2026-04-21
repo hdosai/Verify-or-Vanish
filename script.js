@@ -119,8 +119,23 @@ function loadPhase1() {
   }
 
   if (mode === "missing") {
-    display = phase1Answer.replace(/[A-Z]/g, "_ ");
-  }
+  let letters = phase1Answer.split("");
+
+  let revealed = new Array(letters.length).fill("_");
+
+  // always show first letter (big hint)
+  revealed[0] = letters[0];
+
+  // randomly reveal 1 more letter (not first/last)
+  let randomIndex;
+  do {
+    randomIndex = Math.floor(Math.random() * letters.length);
+  } while (randomIndex === 0);
+
+  revealed[randomIndex] = letters[randomIndex];
+
+  display = revealed.join(" ") + `  (LENGTH: ${letters.length})`;
+}
 
   if (mode === "leet") {
     display = phase1Answer
