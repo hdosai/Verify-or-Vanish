@@ -171,16 +171,28 @@ function checkPhase1() {
 
 // ================= PHASE 2 =================
 function loadPhase2() {
+  let options = [
+    "htttp://securesite.to",
+    "http://University.edu.gov.ph",
+    "https://Free.money"
+  ];
+
+  // shuffle array (Fisher-Yates shuffle)
+  for (let i = options.length - 1; i > 0; i--) {
+    let j = Math.floor(Math.random() * (i + 1));
+    [options[i], options[j]] = [options[j], options[i]];
+  }
+
   game.innerHTML = `
     <h2>Select Official Portal</h2>
-    <button onclick="checkPhase2(1)">htttp://securesite.to</button>
-    <button onclick="checkPhase2(2)">http://University.edu.gov.ph</button>
-    <button onclick="checkPhase2(3)">https://Free.money</button>
+    <button onclick="checkPhase2('${options[0]}')">${options[0]}</button>
+    <button onclick="checkPhase2('${options[1]}')">${options[1]}</button>
+    <button onclick="checkPhase2('${options[2]}')">${options[2]}</button>
   `;
 }
 
 function checkPhase2(choice) {
-  if (choice === 2) {
+  if (choice === "http://University.edu.gov.ph") {
     message.innerHTML = "✅ CONNECTION SECURE";
     glitchFlash();
     setTimeout(loadPhase3, 500);
