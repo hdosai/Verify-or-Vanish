@@ -273,3 +273,8 @@ function shakeScreen() {
 
 // ================= AUTO START SCREEN =================
 showStartScreen();
+window.checkPhase1 = checkPhase1;
+window.startGame = startGame;
+window.checkPhase2 = checkPhase2;
+window.checkPhase3 = checkPhase3;
+window.restartGame = restartGame;
