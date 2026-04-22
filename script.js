@@ -15,25 +15,25 @@ let alarmSound = new Audio("sounds/alarm.mp3");
 let playerCode = "";
 
 let phase1Words = [
-  "Identity",
-  "Biometrics",
-  "Verification",
-  "Authentication",
-  "Credential",
-  "Registry",
-  "Database",
-  "Tracking",
-  "Security",
-  "Encryption",
-  "Authorization",
-  "Identification",
-  "Digitalization",
-  "Monitoring",
-  "Profiling",
-  "Access",
-  "Control",
-  "Validation",
-  "Digitization"
+  "IDENTITY",
+  "BIOMETRICS",
+  "VERIFICATION",
+  "AUTHENTICATION",
+  "CREDENTIAL",
+  "REGISTRY",
+  "DATABASE",
+  "TRACKING",
+  "SECURITY",
+  "ENCRYPTION",
+  "AUTHORIZATION",
+  "IDENTIFICATION",
+  "DIGITALIZATION",
+  "MONITORING",
+  "PROFILING",
+  "ACCESS",
+  "CONTROL",
+  "VALIDATION",
+  "DIGITIZATION"
 ];
 let phase1Answer = localStorage.getItem("phase1Answer");
 
