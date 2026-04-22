@@ -61,6 +61,7 @@ function generateCode() {
 
 // ================= START GAME =================
 function startGame() {
+  localStorage.removeItem("phase1Answer");
   initFirebase();
 
   playerCode = generateCode(); // 🔥 NEW
