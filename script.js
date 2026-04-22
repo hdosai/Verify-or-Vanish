@@ -330,7 +330,7 @@ function isValidName(name) {
     "racist",
     "nigger","nigga","niggah","n1gg4","n1gg3r",
     "chingchong",
-    "tite","pepe","puday","puke","pekpek","bilat","gayporn"
+    "tite","pepe","puday","puke","pekpek","bilat","pwet","gayporn"
   ];
 
   let normalized = normalizeText(name);
