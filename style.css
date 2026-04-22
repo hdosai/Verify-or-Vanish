@@ -83,3 +83,7 @@ input {
     font-size: 1.8rem;
   }
 }
+canvas {
+  display: block;
+  margin: 10px auto;
+}
