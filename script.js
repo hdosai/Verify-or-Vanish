@@ -12,13 +12,35 @@ let message = document.getElementById("message");
 let tickSound = new Audio("sounds/tick.mp3");
 let alarmSound = new Audio("sounds/alarm.mp3");
 
-let phase1Words = ["MANDATORY", "DIGITAL", "IDENTIFICATION"];
+let playerCode = "";
+
+let phase1Words = [
+  "AUTHENTICATION",
+  "BIOMETRICS",
+  "VERIFICATION",
+  "IDENTIFICATION",
+  "ENROLLMENT",
+  "CREDENTIAL",
+  "REGISTRY",
+  "COMPLIANCE",
+  "SURVEILLANCE",
+  "ENCRYPTION",
+  "CONSENT",
+  "AUTHORIZATION",
+  "TRACEABILITY",
+  "INTEROPERABILITY",
+  "DIGITIZATION",
+  "CENTRALIZATION",
+  "GOVERNANCE",
+  "PROFILING",
+  "VALIDATION",
+  "RECOGNITION"
+];
 let phase1Answer = localStorage.getItem("phase1Answer");
 
 let countdown;
 let lastTickTime = Date.now();
 let gameStarted = false; // 🔥 NEW: controls start button logic
-
 
 function initFirebase() {
   db = window.db;
@@ -27,9 +49,22 @@ function initFirebase() {
   firebaseOnValue = window.onValue;
 }
 
+function generateCode() {
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let code = "";
+
+  for (let i = 0; i < 5; i++) {
+    code += chars[Math.floor(Math.random() * chars.length)];
+  }
+
+  return code;
+}
+
 // ================= START GAME =================
 function startGame() {
-  initFirebase(); // 🔥 connect Firebase first
+  initFirebase();
+
+  playerCode = generateCode(); // 🔥 NEW
 
   tickSound.currentTime = 0;
   tickSound.play().catch(() => {});
@@ -120,19 +155,22 @@ function loadPhase1() {
 
   if (mode === "missing") {
   let letters = phase1Answer.split("");
-
   let revealed = new Array(letters.length).fill("_");
 
-  // always show first letter (big hint)
+  // always reveal first letter
   revealed[0] = letters[0];
 
-  // randomly reveal 1 more letter (not first/last)
-  let randomIndex;
-  do {
-    randomIndex = Math.floor(Math.random() * letters.length);
-  } while (randomIndex === 0);
+  // reveal more letters based on word length
+  let revealCount = Math.ceil(letters.length / 4); // scales difficulty
 
-  revealed[randomIndex] = letters[randomIndex];
+  for (let i = 0; i < revealCount; i++) {
+    let index;
+    do {
+      index = Math.floor(Math.random() * letters.length);
+    } while (revealed[index] !== "_");
+
+    revealed[index] = letters[index];
+  }
 
   display = revealed.join(" ") + `  (LENGTH: ${letters.length})`;
 }
@@ -146,12 +184,15 @@ function loadPhase1() {
       .replaceAll("T", "7");
   }
 
-  game.innerHTML = `
+    game.innerHTML = `
     <h2>Decrypt System Protocol</h2>
     <p>${display}</p>
 
     <input type="text" id="answer1" placeholder="Enter word">
     <br>
+
+    <p style="margin-top:10px;">🆔 ID Code: <b>${playerCode}</b></p> <!-- 🔥 NEW -->
+
     <button onclick="checkPhase1()">Submit</button>
   `;
 }
@@ -193,10 +234,13 @@ function loadPhase2() {
 
 function checkPhase2(choice) {
   if (choice === "http://University.edu.gov.ph") {
-    message.innerHTML = "✅ CONNECTION SECURE";
-    glitchFlash();
-    setTimeout(loadPhase3, 500);
-  } else {
+  message.innerHTML = `
+    ✅ CONNECTION SECURE <br>
+    🆔 Your ID code is: <b>${playerCode}</b>
+  `;
+  glitchFlash();
+  setTimeout(loadPhase3, 1200);
+ } else {
     message.innerHTML = "⚠️ PHISHING DETECTED (-5s)";
     timeLeft -= 5;
     shakeScreen();
@@ -205,34 +249,23 @@ function checkPhase2(choice) {
 
 // ================= PHASE 3 =================
 function loadPhase3() {
-  let today = new Date();
-  let d = today.getDate();
-  let m = today.getMonth() + 1;
-  let y = today.getFullYear();
-
   game.innerHTML = `
-    <h2>Date Verification</h2>
-    <p>Enter today's date (DD/MM/YYYY)</p>
-    <input type="text" id="dateInput">
+    <h2>Final Verification</h2>
+    <p>What is your ID code?</p>
+
+    <input type="text" id="codeInput">
     <br>
-    <button onclick="checkPhase3(${d},${m},${y})">Verify</button>
+    <button onclick="checkPhase3()">Verify</button>
   `;
 }
 
-function checkPhase3(d, m, y) {
-  let input = document.getElementById("dateInput").value;
+function checkPhase3() {
+  let input = document.getElementById("codeInput").value.toUpperCase();
 
-  let inputParts = input.split("/");
-
-  let correct =
-    Number(inputParts[0]) === d &&
-    Number(inputParts[1]) === m &&
-    Number(inputParts[2]) === y;
-
-  if (correct) {
+  if (input === playerCode) {
     endGame(true);
   } else {
-    message.innerHTML = "❌ INVALID DATE";
+    message.innerHTML = "❌ INVALID ID CODE";
     shakeScreen();
   }
 }
