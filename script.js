@@ -15,26 +15,25 @@ let alarmSound = new Audio("sounds/alarm.mp3");
 let playerCode = "";
 
 let phase1Words = [
-  "AUTHENTICATION",
-  "BIOMETRICS",
-  "VERIFICATION",
-  "IDENTIFICATION",
-  "ENROLLMENT",
-  "CREDENTIAL",
-  "REGISTRY",
-  "COMPLIANCE",
-  "SURVEILLANCE",
-  "ENCRYPTION",
-  "CONSENT",
-  "AUTHORIZATION",
-  "TRACEABILITY",
-  "INTEROPERABILITY",
-  "DIGITIZATION",
-  "CENTRALIZATION",
-  "GOVERNANCE",
-  "PROFILING",
-  "VALIDATION",
-  "RECOGNITION"
+  "Identity",
+  "Biometrics",
+  "Verification",
+  "Authentication",
+  "Credential",
+  "Registry",
+  "Database",
+  "Tracking",
+  "Security",
+  "Encryption",
+  "Authorization",
+  "Identification",
+  "Digitalization",
+  "Monitoring",
+  "Profiling",
+  "Access",
+  "Control",
+  "Validation",
+  "Digitization"
 ];
 let phase1Answer = localStorage.getItem("phase1Answer");
 
@@ -135,6 +134,22 @@ function showStartScreen() {
   `;
 }
 
+// ================= CODE RENDER =================
+function drawCode() {
+  let canvas = document.getElementById("codeCanvas");
+  let ctx = canvas.getContext("2d");
+
+  canvas.width = 200;
+  canvas.height = 60;
+
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  ctx.fillStyle = "#00ffcc";
+  ctx.font = "30px Courier New";
+  ctx.fillText(playerCode, 20, 40);
+}
+
 // ================= PHASE 1 =================
 function loadPhase1() {
 
@@ -192,11 +207,13 @@ function loadPhase1() {
     <input type="text" id="answer1" placeholder="Enter word">
     <br>
 
-    <p style="margin-top:10px;">🆔 ID Code: <b>${playerCode}</b></p> <!-- 🔥 NEW -->
-
+    <p>🆔 ID Code:</p>
+    <canvas id="codeCanvas"></canvas> <!-- 🔥 HERE -->
     <button onclick="checkPhase1()">Submit</button>
   `;
+  setTimeout(drawCode, 50);
 }
+
 
 function checkPhase1() {
   let ans = document.getElementById("answer1").value.toUpperCase();
@@ -237,7 +254,7 @@ function checkPhase2(choice) {
   if (choice === "https://philsys.gov.ph/") {
   message.innerHTML = `
     ✅ CONNECTION SECURE <br>
-    🆔 Your ID code is: <b>${playerCode}</b>
+    <p class="no-copy">🆔 ID Code: <b>${playerCode}</b></p>
   `;
   glitchFlash();
   setTimeout(() => {
@@ -361,3 +378,16 @@ window.startGame = startGame;
 window.checkPhase2 = checkPhase2;
 window.checkPhase3 = checkPhase3;
 window.restartGame = restartGame;
+
+document.addEventListener("copy", (e) => {
+  e.preventDefault();
+});
+
+document.addEventListener("contextmenu", (e) => {
+  e.preventDefault();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.ctrlKey && ["c", "v", "u"].includes(e.key.toLowerCase())) {
+    e.preventDefault();
+  }
+});
