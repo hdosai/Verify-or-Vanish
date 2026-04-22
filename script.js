@@ -214,9 +214,9 @@ function checkPhase1() {
 // ================= PHASE 2 =================
 function loadPhase2() {
   let options = [
-    "htttp://securesite.to",
-    "http://University.edu.gov.ph",
-    "https://Free.money"
+    "htttp://philsys.g0v.info/",
+    "https://philsys.gov.ph/",
+    "https://https://philsys.info/"
   ];
 
   // shuffle array (Fisher-Yates shuffle)
@@ -234,7 +234,7 @@ function loadPhase2() {
 }
 
 function checkPhase2(choice) {
-  if (choice === "http://University.edu.gov.ph") {
+  if (choice === "https://philsys.gov.ph/") {
   message.innerHTML = `
     ✅ CONNECTION SECURE <br>
     🆔 Your ID code is: <b>${playerCode}</b>
