@@ -292,10 +292,79 @@ function checkPhase3() {
   }
 }
 
-// ================= LEADERBOARD =================
+// ================= NAME VALIDATION =================
+function normalizeText(str) {
+  return str
+    .toLowerCase()
+    .trim()
+    // remove ALL non-alphanumeric
+    .replace(/[^a-z0-9]/g, "")
+    // full leet mapping
+    .replace(/4/g, "a")
+    .replace(/3/g, "e")
+    .replace(/1/g, "i")
+    .replace(/0/g, "o")
+    .replace(/7/g, "t")
+    .replace(/5/g, "s")
+    .replace(/8/g, "b");
+}
+
+// compress repeated letters like "aaaa" → "a"
+function collapseRepeats(str) {
+  return str.replace(/(.)\1+/g, "$1");
+}
+
+function isValidName(name) {
+  if (!name) return false;
+
+  name = name.trim();
+
+  if (name.length < 2 || name.length > 15) return false;
+
+  if (!/^[a-zA-Z0-9 ]+$/.test(name)) return false;
+
+  const bannedWords = [
+    "putangina","puta","gago","tanga","bobo","ulol",
+    "punyeta","leche","hinayupak","bwisit",
+    "fuck","shit","bitch","ass","sex","porn","hitler",
+    "racist",
+    "nigger","nigga","niggah","n1gg4","n1gg3r",
+    "chingchong",
+    "tite","pepe","puday","puke","pekpek","bilat","gayporn"
+  ];
+
+  let normalized = normalizeText(name);
+  normalized = collapseRepeats(normalized);
+
+  for (let word of bannedWords) {
+    let cleanWord = collapseRepeats(normalizeText(word));
+
+    if (normalized.includes(cleanWord)) {
+      return false;
+    }
+  }
+
+  return true;
+}
+
+// ================= SAVE SCORE =================
 function saveScore() {
-  let name = prompt("Enter your name:");
-  if (!name) name = "Anonymous";
+  let name;
+
+  while (true) {
+    name = prompt("Enter your name for leaderboard:");
+
+    if (name === null) {
+      alert("You must enter a name to save your score.");
+      continue;
+    }
+
+    if (isValidName(name)) break;
+
+    alert("Invalid name. Please avoid offensive or invalid names (2–15 characters).");
+  }
+
+  name = name.trim();
 
   let score = timeLeft;
 
