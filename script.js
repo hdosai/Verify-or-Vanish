@@ -239,7 +239,10 @@ function checkPhase2(choice) {
     🆔 Your ID code is: <b>${playerCode}</b>
   `;
   glitchFlash();
-  setTimeout(loadPhase3, 1200);
+  setTimeout(() => {
+    message.innerHTML = ""; // 🔥 CLEAR IT HERE
+    loadPhase3();
+  }, 1200);
  } else {
     message.innerHTML = "⚠️ PHISHING DETECTED (-5s)";
     timeLeft -= 5;
