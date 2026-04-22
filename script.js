@@ -157,11 +157,12 @@ function loadPhase1() {
   let letters = phase1Answer.split("");
   let revealed = new Array(letters.length).fill("_");
 
-  // always reveal first letter
+  // Always reveal first and last letter
   revealed[0] = letters[0];
+  revealed[letters.length - 1] = letters[letters.length - 1];
 
-  // reveal more letters based on word length
-  let revealCount = Math.ceil(letters.length / 4); // scales difficulty
+  // Reveal ~40% of the word (you can tweak this)
+  let revealCount = Math.floor(letters.length * 0.4);
 
   for (let i = 0; i < revealCount; i++) {
     let index;
